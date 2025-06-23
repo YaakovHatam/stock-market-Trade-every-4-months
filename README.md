@@ -5,7 +5,7 @@ This repository contains a simple example application that demonstrates how Nasd
 ## Files
 
 - `nasdaq_sample.csv` &ndash; Sample dataset with monthly closing prices (2023&ndash;2024).
-- `visualize_nasdaq.py` &ndash; Python script that loads the sample data, resamples it to 4‑month intervals, and plots the result.
+- `visualize_nasdaq.py` &ndash; Python script that loads the sample data, resamples it to 4‑month intervals, and plots the result. Points are colored green if the price is higher than the previous 4‑month checkpoint and red if it is lower.
 
 ## Usage
 
@@ -18,6 +18,6 @@ This repository contains a simple example application that demonstrates how Nasd
    ```bash
    python visualize_nasdaq.py
    ```
-   A plot window will appear showing the monthly closing prices and the prices if trading were done only once every four months.
+   The generated plot shows the four‑month closing price series only. Each point is colored green if the price increased from the previous checkpoint or red if it decreased. The image is saved as `nasdaq_4m_plot.png` in the repository directory.
 
 This is a minimal example to illustrate the concept without fetching real data from the internet.
