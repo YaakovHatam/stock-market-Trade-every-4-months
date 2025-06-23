@@ -1,1 +1,3 @@
-nasdaq_4m_plot.png
+output/
+cache/
+__pycache__/

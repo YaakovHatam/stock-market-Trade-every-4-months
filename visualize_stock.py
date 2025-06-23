@@ -1,9 +1,13 @@
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+from visualizer import make_four_monthly_plot
 
 try:
     import yfinance as yf
+
+    yf.set_tz_cache_location("./cache")
+
 except ImportError:
     print("The 'yfinance' package is required. Install it with 'pip install yfinance'.")
     sys.exit(1)
@@ -17,23 +21,16 @@ def main():
     symbol = sys.argv[1].upper()
 
     # Fetch monthly data from the start of trading
-    data = yf.download(symbol, period="max", interval="1mo", auto_adjust=True)
-    if data.empty:
+    data = yf.download(
+        symbol, period="max", interval="1mo", auto_adjust=True, multi_level_index=False
+    )
+    if data is None or data.empty:
         print(f"No data found for {symbol}.")
         sys.exit(1)
 
-    close = data['Close'].dropna()
+    data.reset_index(inplace=True)
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(close.index, close.values, marker='o')
-    plt.title(f"{symbol} Monthly Close")
-    plt.xlabel("Date")
-    plt.ylabel("Close Price")
-    plt.grid(True)
-    plt.tight_layout()
-    outfile = f"{symbol}_monthly_plot.png"
-    plt.savefig(outfile)
-    print(f"Plot saved to {outfile}")
+    make_four_monthly_plot(data, symbol)
 
 
 if __name__ == "__main__":
